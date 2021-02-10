@@ -82,7 +82,7 @@ def find_fuzz_targets(directory, fuzzing_language):
       continue
     if not os.stat(path).st_mode & EXECUTABLE:
       continue
-    if fuzzing_language != 'python' and not is_elf(path):
+    if fuzzing_language != 'python' and fuzzing_language != 'jvm' and not is_elf(path):
       continue
     if os.getenv('FUZZING_ENGINE') != 'none':
       with open(path, 'rb') as file_handle:
