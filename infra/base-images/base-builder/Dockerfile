@@ -96,6 +96,28 @@ ENV BAZELISK_VERSION 1.7.4
 RUN curl -L https://github.com/bazelbuild/bazelisk/releases/download/v$BAZELISK_VERSION/bazelisk-linux-amd64 -o /usr/local/bin/bazel && \
     chmod +x /usr/local/bin/bazel
 
+# Install OpenJDK 15.
+RUN cd /tmp && \
+    curl -L -O https://download.java.net/java/GA/jdk15.0.2/0d1cfde4252546c6931946de8db48ee2/7/GPL/openjdk-15.0.2_linux-x64_bin.tar.gz && \
+    mkdir -p /usr/lib/jvm/java-15-openjdk-amd64 && \
+    tar -xzv --strip-components=1 -f openjdk-15.0.2_linux-x64_bin.tar.gz --directory /usr/lib/jvm/java-15-openjdk-amd64 && \
+    rm -f openjdk-15.0.2_linux-x64_bin.tar.gz
+
+ENV JAVA_HOME=/usr/lib/jvm/java-15-openjdk-amd64
+
+# Install the latest Jazzer for JVM fuzzing.
+RUN cd $SRC/ && \
+    git clone --depth=1 https://github.com/CodeIntelligenceTesting/jazzer && \
+    cd jazzer && \
+    bazel build --java_runtime_version=localjdk_15 -c opt --cxxopt="-stdlib=libc++" --linkopt=-lc++ //agent:jazzer_agent_deploy.jar //driver:jazzer_driver //bazel:jazzer //agent:jazzer_api_deploy.jar && \
+    cp bazel-bin/agent/jazzer_agent_deploy.jar bazel-bin/driver/jazzer_driver bazel/jazzer /usr/local/bin && \
+    cp bazel-bin/agent/jazzer_api_deploy.jar /usr/local/lib && \
+    bazel clean --expunge && \
+    rm -r $(bazel info repository_cache) && \
+    rm -rf $SRC/jazzer
+
+ENV JAZZER_API_CLASSPATH "/usr/local/lib/jazzer_api_deploy.jar"
+
 # Default build flags for various sanitizers.
 ENV SANITIZER_FLAGS_address "-fsanitize=address -fsanitize-address-use-after-scope"
 

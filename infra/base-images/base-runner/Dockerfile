@@ -14,16 +14,23 @@
 #
 ################################################################################
 
-# Using multi-stage build to copy some LLVM binaries needed in the runner image.
-FROM gcr.io/oss-fuzz-base/base-clang AS base-clang
+# Using multi-stage build to copy some LLVM binaries and the Jazzer binaries
+# needed in the runner image.
+FROM gcr.io/oss-fuzz-base/base-builder AS base-builder
 
 FROM gcr.io/oss-fuzz-base/base-image
 
 # Copy the binaries needed for code coverage and crash symbolization.
-COPY --from=base-clang /usr/local/bin/llvm-cov \
+COPY --from=base-builder /usr/local/bin/llvm-cov \
      /usr/local/bin/llvm-profdata \
      /usr/local/bin/llvm-symbolizer \
      /usr/local/bin/
+
+# Copy the Jazzer binaries.
+COPY --from=base-builder /usr/local/bin/jazzer \
+    /usr/local/bin/jazzer_agent_deploy.jar \
+    /usr/local/bin/jazzer_driver \
+    /usr/local/bin/
 
 # TODO(metzman): Install libc6-i386 lib32gcc1 instead of libc6-dev-i386 for
 # consistency with ClusterFuzz image and to reduce size.
@@ -67,6 +74,14 @@ ENV PATH $PATH:/root/.go/bin:$GOPATH/bin
 
 # Set up Golang coverage modules.
 RUN go get github.com/google/oss-fuzz/infra/go/coverage/...
+
+# Install OpenJDK 15.
+ADD https://download.java.net/java/GA/jdk15.0.2/0d1cfde4252546c6931946de8db48ee2/7/GPL/openjdk-15.0.2_linux-x64_bin.tar.gz $SRC/
+RUN mkdir -p /usr/lib/jvm/java-15-openjdk-amd64 && \
+    tar -xzv --strip-components=1 -f $SRC/openjdk-15.0.2_linux-x64_bin.tar.gz --directory /usr/lib/jvm/java-15-openjdk-amd64 && \
+    rm -f $SRC/openjdk-15.0.2_linux-x64_bin.tar.gz
+
+ENV JAVA_HOME=/usr/lib/jvm/java-15-openjdk-amd64
 
 # Do this last to make developing these files easier/faster due to caching.
 COPY bad_build_check \
