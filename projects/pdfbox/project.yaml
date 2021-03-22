@@ -1,0 +1,10 @@
+homepage: "https://pdfbox.apache.org/"
+language: jvm
+primary_contact: "lehmi@apache.org"
+auto_ccs:
+  - "meumertzheim@code-intelligence.com"
+fuzzing_engines:
+  - libfuzzer
+main_repo: "https://svn.apache.org/repos/asf/pdfbox/trunk/"
+sanitizers:
+  - address
