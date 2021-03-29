@@ -1,0 +1,10 @@
+homepage: "https://github.com/JSQLParser/JSqlParser"
+language: jvm
+primary_contact: "t.warneke@gmx.net"
+auto_ccs:
+  - "wagner@code-intelligence.com"
+fuzzing_engines:
+  - libfuzzer
+main_repo: "https://github.com/JSQLParser/JSqlParser"
+sanitizers:
+  - address
