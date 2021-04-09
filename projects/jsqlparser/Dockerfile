@@ -18,7 +18,7 @@ FROM gcr.io/oss-fuzz-base/base-builder
 RUN apt-get update && apt-get install -y maven
 
 RUN git clone --depth 1 https://github.com/google/fuzzing
-RUN cat fuzzing/dictionaries/sql.dict > $OUT/JSqlParserFuzzer.dict
+RUN cat fuzzing/dictionaries/sql.dict > $SRC/JSqlParserFuzzer.dict
 
 #RUN git clone --depth 1 https://github.com/dvyukov/go-fuzz-corpus && \
 #    zip -j $OUT/JsonFuzzer_seed_corpus.zip go-fuzz-corpus/json/corpus/*
