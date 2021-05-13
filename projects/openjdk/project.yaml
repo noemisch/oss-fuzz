@@ -1,0 +1,8 @@
+homepage: "https://openjdk.java.net/"
+language: jvm
+primary_contact: "meumertzheim@code-intelligence.com"
+fuzzing_engines:
+  - libfuzzer
+main_repo: "https://github.com/openjdk/jdk"
+sanitizers:
+  - address
