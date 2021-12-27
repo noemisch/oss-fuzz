@@ -24,5 +24,8 @@ rm -rf ./installer_linux
 echo 'Set "GOPATH=/root/go"'
 echo 'Set "PATH=$PATH:/root/.go/bin:$GOPATH/bin"'
 
-go get -u github.com/mdempsky/go114-fuzz-build
-ln -s $GOPATH/bin/go114-fuzz-build $GOPATH/bin/go-fuzz
+#go get -u github.com/mdempsky/go114-fuzz-build
+#ln -s $GOPATH/bin/go114-fuzz-build $GOPATH/bin/go-fuzz
+go get -u github.com/CodeIntelligenceTesting/go-fuzz/go-fuzz-build@$GOFUZZTAG
+
+ln -s $GOPATH/bin/go-fuzz-build $GOPATH/bin/go-fuzz
