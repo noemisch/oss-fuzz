@@ -23,7 +23,7 @@ cd $GOPATH/src/github.com/coredns/coredns
 ls plugin/*/fuzz.go | while read target
 do
     fuzzed_plugin=`echo $target | cut -d'/' -f 2`
-    compile_go_fuzzer github.com/coredns/coredns/plugin/$fuzzed_plugin Fuzz fuzz_plugin_$fuzzed_plugin gofuzz
+    compile_go_fuzzer github.com/coredns/coredns/plugin/$fuzzed_plugin Fuzz fuzz_plugin_$fuzzed_plugin github.com/coredns/coredns* gofuzz
 done
 
-compile_go_fuzzer github.com/coredns/coredns/test Fuzz fuzz_core gofuzz
+compile_go_fuzzer github.com/coredns/coredns/test Fuzz fuzz_core github.com/coredns/coredns* gofuzz
