@@ -18,7 +18,9 @@
 path=$1
 function=$2
 fuzzer=$3
-include=$4
+if [[ $# -eq 4 ]]; then
+  include=$4
+fi
 tags="-tags gofuzz"
 if [[ $#  -eq 5 ]]; then
   tags="-tags $5"
@@ -53,8 +55,11 @@ if [[ $SANITIZER = *coverage* ]]; then
 else
   # Compile and instrument all Go files relevant to this fuzz target.
   echo "Running go-fuzz $tags -func $function -o $fuzzer.a $path"
-  go-fuzz $tags -libfuzzer -include $include -func $function -o $fuzzer.a -go_fuzz_deps $GOFUZZSRC $path
-
+  if [[ $# -eq 4 ]]; then
+    go-fuzz $tags -libfuzzer -include $include -func $function -o $fuzzer.a -go_fuzz_deps $GOFUZZSRC $path
+  else
+    go-fuzz $tags -libfuzzer -func $function -o $fuzzer.a -go_fuzz_deps $GOFUZZSRC $path
+  fi
   # Link Go code ($fuzzer.a) with fuzzing engine to produce fuzz target binary.
   $CXX $CXXFLAGS $LIB_FUZZING_ENGINE $fuzzer.a -o $OUT/$fuzzer
 fi
