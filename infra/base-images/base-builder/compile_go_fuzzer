@@ -19,10 +19,16 @@ path=$1
 function=$2
 fuzzer=$3
 if [[ $# -eq 4 ]]; then
-  include=$4
+  #external repositories can have gofuzz as 4th parameter
+  if [ $4 = "gofuzz" ]; then
+    tags="-tags $4"
+  else
+    include=$4
+  fi
 fi
 tags="-tags gofuzz"
 if [[ $#  -eq 5 ]]; then
+  include=$4
   tags="-tags $5"
 fi
 
@@ -55,8 +61,12 @@ if [[ $SANITIZER = *coverage* ]]; then
 else
   # Compile and instrument all Go files relevant to this fuzz target.
   echo "Running go-fuzz $tags -func $function -o $fuzzer.a $path"
-  if [[ $# -eq 4 ]]; then
-    go-fuzz $tags -libfuzzer -include $include -func $function -o $fuzzer.a -go_fuzz_deps $GOFUZZSRC $path
+  if [[ $# -eq 4 || $# -eq 5 ]]; then
+    if [[ $4 = "gofuzz" ]]; then
+      go-fuzz $tags -libfuzzer -func $function -o $fuzzer.a -go_fuzz_deps $GOFUZZSRC $path
+    else
+      go-fuzz $tags -libfuzzer -include $include -func $function -o $fuzzer.a -go_fuzz_deps $GOFUZZSRC $path
+    fi
   else
     go-fuzz $tags -libfuzzer -func $function -o $fuzzer.a -go_fuzz_deps $GOFUZZSRC $path
   fi
