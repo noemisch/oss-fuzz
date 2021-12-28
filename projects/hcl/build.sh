@@ -22,7 +22,7 @@ FUZZER_CLASS=Fuzz
 for THE_FUZZER in config expr template traversal
 do
     THE_FUZZER_NAME="fuzz_"$THE_FUZZER
-    compile_go_fuzzer $FUZZERS_PACKAGE/$THE_FUZZER $FUZZER_CLASS $THE_FUZZER_NAME
+    compile_go_fuzzer $FUZZERS_PACKAGE/$THE_FUZZER $FUZZER_CLASS $THE_FUZZER_NAME github.com/hashicorp/hcl*
 
     OUTDIR=$OUT/$THE_FUZZER_NAME"_seed_corpus"
     mkdir $OUTDIR

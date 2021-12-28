@@ -15,4 +15,4 @@
 #
 ################################################################################
 
-compile_go_fuzzer . Fuzz fuzz_sftp
+compile_go_fuzzer . Fuzz fuzz_sftp github.com/pkg/sftp*

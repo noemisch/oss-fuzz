@@ -14,7 +14,7 @@
 #
 ################################################################################
 
-FROM gcr.io/oss-fuzz-base/base-builder-go
+FROM base-builder-cifuzz-go
 
 RUN go get -u -d github.com/google/go-attestation/...
 

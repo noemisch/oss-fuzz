@@ -15,5 +15,5 @@
 #
 ################################################################################
 
-compile_go_fuzzer github.com/dragonflyoss/Dragonfly/dfget/core/uploader FuzzParseParams uploader_fuzz
-compile_go_fuzzer github.com/dragonflyoss/Dragonfly/supernode/daemon/mgr/cdn Fuzz cdn_fuzz
+compile_go_fuzzer github.com/dragonflyoss/Dragonfly/dfget/core/uploader FuzzParseParams uploader_fuzz github.com/dragonflyoss/Dragonfly*
+compile_go_fuzzer github.com/dragonflyoss/Dragonfly/supernode/daemon/mgr/cdn Fuzz cdn_fuzz github.com/dragonflyoss/Dragonfly*

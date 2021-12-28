@@ -24,7 +24,7 @@ git apply $SRC/372f9bd.diff || true
 )
 
 export GODEBUG=cpu.all=off
-compile_go_fuzzer github.com/google/gonids FuzzParseRule fuzz_parserule
+compile_go_fuzzer github.com/google/gonids FuzzParseRule fuzz_parserule github.com/google/gonids*
 
 cd $SRC
 unzip emerging.rules.zip

@@ -25,7 +25,7 @@ function compile_ds_fuzzer {
     DS_PROVIDERS="$2" go generate
   fi
 
-  compile_go_fuzzer github.com/ipfs/go-datastore/fuzz Fuzz $fuzzer
+  compile_go_fuzzer github.com/ipfs/go-datastore/fuzz Fuzz $fuzzer github.com/ipfs/go-datastore*
 }
 
 compile_ds_fuzzer ipfs_ds_flatfs

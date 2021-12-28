@@ -24,7 +24,7 @@ export PATH=/tmp/go/bin:$PATH
 cd $SRC/notification-controller/controllers
 cp ../fuzzing/fuzz.go ./
 rm *_test.go
-compile_go_fuzzer . Fuzz notification_fuzzer
+compile_go_fuzzer . Fuzz notification_fuzzer github.com/fluxcd/notification-controller*
 export PATH=$OLD_PATH
 
 # Kustomize-controller:
@@ -33,7 +33,7 @@ sed 's/filippo.io\/age v1.0.0-beta7/filippo.io\/age v1.0.0/g' -i go.mod
 mv fuzz/fuzz.go ./controllers/
 cd controllers
 rm ./*_test.go
-compile_go_fuzzer . Fuzz kustomize_fuzzer
+compile_go_fuzzer . Fuzz kustomize_fuzzer github.com/fluxcd/kustomize-controller*
 
 # Pkg:
 cd $SRC/pkg
@@ -41,18 +41,18 @@ mv ./fuzz/tls_fuzzer.go runtime/tls/
 mv ./fuzz/conditions_fuzzer.go ./runtime/conditions/
 go mod init pkg
 cd fuzz
-compile_go_fuzzer . FuzzUntar fuzz_untar
-compile_go_fuzzer . FuzzLibGit2Error fuzz_libgit_2_error
-compile_go_fuzzer . FuzzEventInfof fuzz_event_infof
+compile_go_fuzzer . FuzzUntar fuzz_untar github.com/fluxcd/pkg*
+compile_go_fuzzer . FuzzLibGit2Error fuzz_libgit_2_error github.com/fluxcd/pkg*
+compile_go_fuzzer . FuzzEventInfof fuzz_event_infof github.com/fluxcd/pkg*
 cd -
 
 cd ./runtime/tls
-compile_go_fuzzer . FuzzTlsConfig fuzz_tls_config
+compile_go_fuzzer . FuzzTlsConfig fuzz_tls_config github.com/fluxcd/pkg*
 cd -
 
 cd ./runtime/conditions
-compile_go_fuzzer . FuzzGetterConditions fuzz_getter_conditions
-compile_go_fuzzer . FuzzConditionsMatch fuzz_conditions_match
-compile_go_fuzzer . FuzzPatchApply fuzz_patch_apply
-compile_go_fuzzer . FuzzConditionsUnstructured fuzz_conditions_unstructured
+compile_go_fuzzer . FuzzGetterConditions fuzz_getter_conditions github.com/fluxcd/pkg*
+compile_go_fuzzer . FuzzConditionsMatch fuzz_conditions_match github.com/fluxcd/pkg*
+compile_go_fuzzer . FuzzPatchApply fuzz_patch_apply github.com/fluxcd/pkg*
+compile_go_fuzzer . FuzzConditionsUnstructured fuzz_conditions_unstructured github.com/fluxcd/pkg*
 cd $SRC

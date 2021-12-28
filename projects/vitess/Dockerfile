@@ -14,7 +14,7 @@
 #
 ################################################################################
 
-FROM gcr.io/oss-fuzz-base/base-builder-go
+FROM base-builder-cifuzz-go
 RUN git clone --depth 1 https://github.com/vitessio/vitess
 COPY build.sh $SRC/
 WORKDIR $SRC/vitess

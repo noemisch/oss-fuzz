@@ -19,5 +19,5 @@ cp $SRC/fuzz*.go $GOPATH/src/google.golang.org/grpc/examples/
 
 # seems needed to build the targets with the golang modules...
 cd $GOPATH/src/google.golang.org/grpc/examples/
-compile_go_fuzzer google.golang.org/grpc/examples FuzzHelloClient fuzz_helloclient
-compile_go_fuzzer google.golang.org/grpc/examples FuzzHelloServer fuzz_helloserver
+compile_go_fuzzer google.golang.org/grpc/examples FuzzHelloClient fuzz_helloclient google.golang.org/grpc*
+compile_go_fuzzer google.golang.org/grpc/examples FuzzHelloServer fuzz_helloserver google.golang.org/grpc*

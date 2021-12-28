@@ -14,7 +14,7 @@
 #
 ################################################################################
 
-FROM gcr.io/oss-fuzz-base/base-builder-go
+FROM base-builder-cifuzz-go
 RUN git clone --depth 1 https://github.com/argoproj/argo-cd
 RUN git clone --depth 1 https://github.com/argoproj/argo-workflows
 COPY build.sh normalizer_fuzzer.go workflow_validation_fuzzer.go $SRC/

@@ -17,4 +17,4 @@
 
 
 
-compile_go_fuzzer cloud.google.com/go/spanner/spansql FuzzParseQuery fuzz_parse_query
+compile_go_fuzzer cloud.google.com/go/spanner/spansql FuzzParseQuery fuzz_parse_query cloud.google.com/go/spanner*

@@ -14,7 +14,7 @@
 #
 ################################################################################
 
-FROM gcr.io/oss-fuzz-base/base-builder-go
+FROM base-builder-cifuzz-go
 RUN git clone https://github.com/tendermint/tendermint
 
 COPY build.sh $SRC

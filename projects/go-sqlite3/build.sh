@@ -17,7 +17,7 @@
 
 cd $GOPATH/src/github.com/mattn/go-sqlite3
 
-compile_go_fuzzer github.com/mattn/go-sqlite3/_example/fuzz FuzzOpenExec fuzz_open_exec
+compile_go_fuzzer github.com/mattn/go-sqlite3/_example/fuzz FuzzOpenExec fuzz_open_exec github.com/mattn/go-sqlite3*
 
 # generate corpus
 go run _example/simple/simple.go

@@ -16,6 +16,6 @@
 ################################################################################
 
 
-compile_go_fuzzer github.com/pingcap/tidb/types FuzzMarshalJSON fuzzMarshalJSON
-compile_go_fuzzer github.com/pingcap/tidb/types FuzzNewBitLiteral fuzzNewBitLiteral
-compile_go_fuzzer github.com/pingcap/tidb/types FuzzNewHexLiteral fuzzNewHexLiteral
+compile_go_fuzzer github.com/pingcap/tidb/types FuzzMarshalJSON fuzzMarshalJSON github.com/pingcap/tidb*
+compile_go_fuzzer github.com/pingcap/tidb/types FuzzNewBitLiteral fuzzNewBitLiteral github.com/pingcap/tidb*
+compile_go_fuzzer github.com/pingcap/tidb/types FuzzNewHexLiteral fuzzNewHexLiteral github.com/pingcap/tidb*

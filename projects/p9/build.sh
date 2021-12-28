@@ -16,4 +16,4 @@
 ################################################################################
 
 
-compile_go_fuzzer github.com/hugelgupf/p9/p9 Fuzz p9_fuzzer
+compile_go_fuzzer github.com/hugelgupf/p9/p9 Fuzz p9_fuzzer github.com/hugelgupf/p9*

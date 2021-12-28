@@ -17,4 +17,4 @@
 
 
 
-compile_go_fuzzer github.com/influxdata/influxdb/jsonweb FuzzJsonWeb fuzzjsonweb
+compile_go_fuzzer github.com/influxdata/influxdb/jsonweb FuzzJsonWeb fuzzjsonweb github.com/influxdata/influxdb*

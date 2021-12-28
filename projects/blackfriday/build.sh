@@ -20,4 +20,4 @@ cp $SRC/render_fuzzer.go .
 rm go.mod
 go mod init github.com/russross/blackfriday
 
-compile_go_fuzzer github.com/russross/blackfriday Fuzz render_fuzzer
+compile_go_fuzzer github.com/russross/blackfriday Fuzz render_fuzzer github.com/russross/blackfriday*

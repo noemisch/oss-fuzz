@@ -15,7 +15,7 @@
 #
 ################################################################################
 
-compile_go_fuzzer github.com/prometheus/prometheus/promql FuzzParseMetric fuzzParseMetric
-compile_go_fuzzer github.com/prometheus/prometheus/promql FuzzParseOpenMetric fuzzParseOpenMetric
-compile_go_fuzzer github.com/prometheus/prometheus/promql FuzzParseMetricSelector fuzzParseMetricSelector
-compile_go_fuzzer github.com/prometheus/prometheus/promql FuzzParseExpr fuzzParseExpr
+compile_go_fuzzer github.com/prometheus/prometheus/promql FuzzParseMetric fuzzParseMetric github.com/prometheus/prometheus*
+compile_go_fuzzer github.com/prometheus/prometheus/promql FuzzParseOpenMetric fuzzParseOpenMetric github.com/prometheus/prometheus*
+compile_go_fuzzer github.com/prometheus/prometheus/promql FuzzParseMetricSelector fuzzParseMetricSelector github.com/prometheus/prometheus*
+compile_go_fuzzer github.com/prometheus/prometheus/promql FuzzParseExpr fuzzParseExpr github.com/prometheus/prometheus*

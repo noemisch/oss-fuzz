@@ -15,5 +15,5 @@
 #
 ################################################################################
 
-compile_go_fuzzer github.com/evanphx/json-patch FuzzCreateMerge fuzz_create_merge
-compile_go_fuzzer github.com/evanphx/json-patch FuzzDecodeApply fuzz_decode_apply
+compile_go_fuzzer github.com/evanphx/json-patch FuzzCreateMerge fuzz_create_merge github.com/evanphx/json-patch*
+compile_go_fuzzer github.com/evanphx/json-patch FuzzDecodeApply fuzz_decode_apply github.com/evanphx/json-patch*

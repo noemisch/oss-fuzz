@@ -22,17 +22,17 @@ make
 # The current status of the coverage build is that we do not break it for the fuzzers that cannot be compiled.
 #The reason that we don't break the build script is to create coverage reports for the fuzzers that compile.
 if [[ $SANITIZER = *coverage* ]]; then
-	compile_go_fuzzer github.com/filecoin-project/lotus/chain/types FuzzMessage fuzz_message gofuzz
+	compile_go_fuzzer github.com/filecoin-project/lotus/chain/types FuzzMessage fuzz_message github.com/filecoin-project/lotus* gofuzz
 	mkdir fuzzing
 	cp ../fuzzing-lotus/fuzz/fuzz.go fuzzing/
-	compile_go_fuzzer github.com/filecoin-project/lotus/fuzzing FuzzBlockMsg fuzz_block_msg || true
-	compile_go_fuzzer github.com/filecoin-project/lotus/fuzzing FuzzBlockMsgStructural fuzz_block_msg_structural || true
-	compile_go_fuzzer github.com/filecoin-project/lotus/fuzzing FuzzBlockHeader fuzz_block_header || true
-	compile_go_fuzzer github.com/filecoin-project/lotus/fuzzing FuzzNodesForHeight fuzz_nodes_for_height || true
+	compile_go_fuzzer github.com/filecoin-project/lotus/fuzzing FuzzBlockMsg fuzz_block_msg github.com/filecoin-project/lotus* || true
+	compile_go_fuzzer github.com/filecoin-project/lotus/fuzzing FuzzBlockMsgStructural fuzz_block_msg_structural github.com/filecoin-project/lotus* || true
+	compile_go_fuzzer github.com/filecoin-project/lotus/fuzzing FuzzBlockHeader fuzz_block_header github.com/filecoin-project/lotus* || true
+	compile_go_fuzzer github.com/filecoin-project/lotus/fuzzing FuzzNodesForHeight fuzz_nodes_for_height github.com/filecoin-project/lotus* || true
 	exit 0
 fi
 
-compile_go_fuzzer ./chain/types FuzzMessage fuzz_message gofuzz
+compile_go_fuzzer ./chain/types FuzzMessage fuzz_message github.com/filecoin-project/lotus* gofuzz
 
 
 # Fuzzers from fuzzing-lotus
@@ -40,8 +40,8 @@ cd ../fuzzing-lotus/fuzz
 rm -Rf libfuzzer
 go mod init github.com/filecoin-project/fuzzing-lotus/fuzz
 
-compile_go_fuzzer github.com/filecoin-project/fuzzing-lotus/fuzz FuzzBlockMsg fuzz_block_msg
-compile_go_fuzzer github.com/filecoin-project/fuzzing-lotus/fuzz FuzzBlockMsgStructural fuzz_block_msg_structural
-compile_go_fuzzer github.com/filecoin-project/fuzzing-lotus/fuzz FuzzBlockHeader fuzz_block_header
-compile_go_fuzzer github.com/filecoin-project/fuzzing-lotus/fuzz FuzzNodesForHeight fuzz_nodes_for_height
+compile_go_fuzzer github.com/filecoin-project/fuzzing-lotus/fuzz FuzzBlockMsg fuzz_block_msg github.com/filecoin-project/fuzzing-lotus*
+compile_go_fuzzer github.com/filecoin-project/fuzzing-lotus/fuzz FuzzBlockMsgStructural fuzz_block_msg_structural github.com/filecoin-project/fuzzing-lotus*
+compile_go_fuzzer github.com/filecoin-project/fuzzing-lotus/fuzz FuzzBlockHeader fuzz_block_header github.com/filecoin-project/fuzzing-lotus*
+compile_go_fuzzer github.com/filecoin-project/fuzzing-lotus/fuzz FuzzNodesForHeight fuzz_nodes_for_height github.com/filecoin-project/fuzzing-lotus*
 exit 0

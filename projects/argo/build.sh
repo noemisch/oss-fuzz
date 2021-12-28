@@ -16,8 +16,8 @@
 ################################################################################
 
 mv $SRC/normalizer_fuzzer.go $SRC/argo-cd/util/argo/normalizers/
-compile_go_fuzzer github.com/argoproj/argo-cd/v2/util/argo/normalizers FuzzNormalize fuzz_normalize
+compile_go_fuzzer github.com/argoproj/argo-cd/v2/util/argo/normalizers FuzzNormalize fuzz_normalize github.com/argoproj/argo-cd*
 
 mv $SRC/workflow_validation_fuzzer.go $SRC/argo-workflows/workflow/validate/
 cd $SRC/argo-workflows
-compile_go_fuzzer github.com/argoproj/argo-workflows/v3/workflow/validate FuzzValidateWorkflow fuzz_validate_workflow
+compile_go_fuzzer github.com/argoproj/argo-workflows/v3/workflow/validate FuzzValidateWorkflow fuzz_validate_workflow github.com/argoproj/argo-cd*

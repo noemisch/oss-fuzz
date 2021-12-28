@@ -14,7 +14,7 @@
 #
 ################################################################################
 
-FROM gcr.io/oss-fuzz-base/base-builder-go
+FROM base-builder-cifuzz-go
 RUN git clone --depth 1 https://github.com/google/cel-go
 
 RUN apt-get update && apt-get install -y protobuf-compiler libprotobuf-dev binutils cmake \

@@ -25,4 +25,4 @@ cp -a 'test/cf/templates' $OUT/validatorfiles
 zip -jr $OUT/fuzz_config_validator_seed_corpus.zip internal/fuzz/corpus
 
 # Compile the fuzzer.
-compile_go_fuzzer github.com/GoogleCloudPlatform/config-validator/internal/fuzz Fuzz fuzz_config_validator
+compile_go_fuzzer github.com/GoogleCloudPlatform/config-validator/internal/fuzz Fuzz fuzz_config_validator github.com/GoogleCloudPlatform*

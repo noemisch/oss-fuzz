@@ -17,4 +17,4 @@
 
 mv $SRC/fuzz.go $SRC/hugo/tpl/transform/
 
-compile_go_fuzzer github.com/gohugoio/hugo/tpl/transform FuzzMarkdownify fuzzmarkdownify
+compile_go_fuzzer github.com/gohugoio/hugo/tpl/transform FuzzMarkdownify fuzzmarkdownify github.com/gohugoio/hugo*

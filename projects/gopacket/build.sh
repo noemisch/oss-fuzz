@@ -17,4 +17,4 @@
 
 
 
-compile_go_fuzzer github.com/google/gopacket/layers FuzzLayer fuzz_layers
+compile_go_fuzzer github.com/google/gopacket/layers FuzzLayer fuzz_layers github.com/google/gopacket*

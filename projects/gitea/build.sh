@@ -15,5 +15,5 @@
 #
 ################################################################################
 
-compile_go_fuzzer code.gitea.io/gitea/tools FuzzMarkdownRenderRaw fuzz_markdown_render_raw gofuzz
-compile_go_fuzzer code.gitea.io/gitea/tools FuzzMarkupPostProcess fuzz_markup_post_process gofuzz
+compile_go_fuzzer code.gitea.io/gitea/tools FuzzMarkdownRenderRaw fuzz_markdown_render_raw github.com/go-gitea/gitea* gofuzz
+compile_go_fuzzer code.gitea.io/gitea/tools FuzzMarkupPostProcess fuzz_markup_post_process github.com/go-gitea/gitea* gofuzz

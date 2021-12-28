@@ -19,8 +19,8 @@ cd pkg
 #go mod download
 
 cp $SRC/schema_fuzzer.go $SRC/pulumi/pkg/codegen/schema/ 
-compile_go_fuzzer github.com/pulumi/pulumi/pkg/v3/codegen/schema SchemaFuzzer schema_fuzzer
+compile_go_fuzzer github.com/pulumi/pulumi/pkg/v3/codegen/schema SchemaFuzzer schema_fuzzer github.com/pulumi/pulumi*
 
 cp $SRC/config_fuzzer.go $SRC/pulumi/sdk/go/common/resource/config/
-compile_go_fuzzer github.com/pulumi/pulumi/sdk/v3/go/common/resource/config FuzzConfig fuzz
-compile_go_fuzzer github.com/pulumi/pulumi/sdk/v3/go/common/resource/config FuzzParseKey fuzz_parse_key
+compile_go_fuzzer github.com/pulumi/pulumi/sdk/v3/go/common/resource/config FuzzConfig fuzz github.com/pulumi/pulumi*
+compile_go_fuzzer github.com/pulumi/pulumi/sdk/v3/go/common/resource/config FuzzParseKey fuzz_parse_key github.com/pulumi/pulumi*

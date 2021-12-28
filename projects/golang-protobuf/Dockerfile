@@ -14,7 +14,7 @@
 #
 ################################################################################
 
-FROM gcr.io/oss-fuzz-base/base-builder-go
+FROM base-builder-cifuzz-go
 
 ENV GO111MODULE="on"
 ENV GOFUZZ111MODULE="on"

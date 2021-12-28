@@ -34,7 +34,7 @@ function compile_fuzzer {
   local function=$2
   local fuzzer="${pkg}_${function}"
 
-  compile_go_fuzzer "k8s.io/kubernetes/test/fuzz/${pkg}" $function $fuzzer
+  compile_go_fuzzer "k8s.io/kubernetes/test/fuzz/${pkg}" $function $fuzzer k8s.io/kubernetes*
 }
 
 compile_fuzzer "yaml" "FuzzDurationStrict"

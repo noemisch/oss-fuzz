@@ -36,5 +36,5 @@ do
     target_corpus_name="${fuzzer_name}_seed_corpus.zip"
 
     curl -s -f -O "https://raw.githubusercontent.com/caddyserver/caddy/fuzz-seed-corpus/${target_corpus_name}" || true
-    compile_go_fuzzer github.com/caddyserver/caddy/v2"$target_dir" "$fuzzed_func" "$fuzzer_name" gofuzz
+    compile_go_fuzzer github.com/caddyserver/caddy/v2"$target_dir" "$fuzzed_func" "$fuzzer_name" github.com/caddyserver/caddy* gofuzz
 done

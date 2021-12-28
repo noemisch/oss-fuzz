@@ -15,4 +15,4 @@
 #
 ################################################################################
 
-compile_go_fuzzer tailscale.com/net/stun FuzzStunParser stun_parser_fuzzer
+compile_go_fuzzer tailscale.com/net/stun FuzzStunParser stun_parser_fuzzer tailscale.com/net/stun*

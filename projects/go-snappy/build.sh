@@ -15,5 +15,5 @@
 #
 ################################################################################
 
-compile_go_fuzzer . FuzzRoundTrip fuzz_roundtrip gofuzz
-compile_go_fuzzer . FuzzDecode fuzz_decode gofuzz
+compile_go_fuzzer . FuzzRoundTrip fuzz_roundtrip github.com/golang/snappy* gofuzz 
+compile_go_fuzzer . FuzzDecode fuzz_decode github.com/golang/snappy* gofuzz

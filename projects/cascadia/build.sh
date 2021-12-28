@@ -16,4 +16,4 @@
 ################################################################################
 
 
-compile_go_fuzzer github.com/andybalholm/cascadia/fuzz Fuzz fuzz
+compile_go_fuzzer github.com/andybalholm/cascadia/fuzz Fuzz fuzz github.com/andybalholm/cascadia*

@@ -20,5 +20,5 @@
 
 ls fuzzit/ | while read target
 do
-    compile_go_fuzzer github.com/valyala/fasthttp/fuzzit/$target Fuzz fuzz_$target gofuzz
+    compile_go_fuzzer github.com/valyala/fasthttp/fuzzit/$target Fuzz fuzz_$target github.com/valyala/fasthttp* gofuzz
 done

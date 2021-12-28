@@ -33,4 +33,4 @@ cp fuzzlpm/github.com/google/cel-go/cel/*.pb.go cel/
 $SRC/go114-fuzz-build/go114-fuzz-build -func FuzzEval -o fuzz_lpm.a github.com/google/cel-go/cel
 $CXX $CXXFLAGS $LIB_FUZZING_ENGINE cel-go-lpm.pb.o go-lpm.o fuzz_lpm.a  $SRC/LPM/src/libfuzzer/libprotobuf-mutator-libfuzzer.a $SRC/LPM/src/libprotobuf-mutator.a $SRC/LPM/external.protobuf/lib/libprotobuf.a -o $OUT/fuzz_lpm
 
-compile_go_fuzzer github.com/google/cel-go/cel FuzzCompile fuzz_compile
+compile_go_fuzzer github.com/google/cel-go/cel FuzzCompile fuzz_compile github.com/google/cel-go*

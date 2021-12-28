@@ -21,10 +21,10 @@ make descriptions
 
 go mod tidy && go mod vendor
 
-compile_go_fuzzer github.com/google/syzkaller/pkg/compiler Fuzz compiler_fuzzer
-compile_go_fuzzer github.com/google/syzkaller/prog/test FuzzDeserialize prog_deserialize_fuzzer
-compile_go_fuzzer github.com/google/syzkaller/prog/test FuzzParseLog prog_parselog_fuzzer
-compile_go_fuzzer github.com/google/syzkaller/pkg/report Fuzz report_fuzzer
+compile_go_fuzzer github.com/google/syzkaller/pkg/compiler Fuzz compiler_fuzzer github.com/google/syzkaller*
+compile_go_fuzzer github.com/google/syzkaller/prog/test FuzzDeserialize prog_deserialize_fuzzer github.com/google/syzkaller*
+compile_go_fuzzer github.com/google/syzkaller/prog/test FuzzParseLog prog_parselog_fuzzer github.com/google/syzkaller*
+compile_go_fuzzer github.com/google/syzkaller/pkg/report Fuzz report_fuzzer github.com/google/syzkaller*
 
 # This target is way too spammy and OOMs very quickly.
 # compile_go_fuzzer ./tools/syz-trace2syz/proggen Fuzz trace2syz_fuzzer

@@ -16,4 +16,4 @@
 ################################################################################
 
 
-compile_go_fuzzer github.com/valyala/fastjson Fuzz fuzz
+compile_go_fuzzer github.com/valyala/fastjson Fuzz fuzz github.com/valyala/fastjson*

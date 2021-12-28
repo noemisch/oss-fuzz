@@ -14,7 +14,7 @@
 #
 ################################################################################
 
-FROM gcr.io/oss-fuzz-base/base-builder-go
+FROM base-builder-cifuzz-go
 RUN apt-get update && apt-get install -y wget zlib1g-dev pkg-config
 RUN git clone --depth 1 --branch fuzz1 https://github.com/AdamKorcz/kustomize-controller
 RUN git clone --depth 1 --branch fuzz1 https://github.com/AdamKorcz/pkg

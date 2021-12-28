@@ -15,6 +15,6 @@
 #
 ################################################################################
 
-compile_go_fuzzer github.com/google/mtail/internal/runtime Fuzz vm-fuzzer
+compile_go_fuzzer github.com/google/mtail/internal/runtime Fuzz vm-fuzzer github.com/google/mtail*
 # Make the dictionary and seed corpus.
 make --debug $OUT/vm-fuzzer.dict $OUT/vm-fuzzer_seed_corpus.zip

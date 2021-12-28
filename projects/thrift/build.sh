@@ -33,4 +33,4 @@ thrift -r --gen go ../../../../tutorial/tutorial.thrift
 (cd ./gen-go/shared && go mod init shared)
 (cd ./gen-go/tutorial && go mod init tutorial)
 go mod tidy || true
-compile_go_fuzzer . Fuzz fuzz_go_tutorial
+compile_go_fuzzer . Fuzz fuzz_go_tutorial github.com/apache/thrift*

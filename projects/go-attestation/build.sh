@@ -18,10 +18,10 @@
 
 
 compile_go_fuzzer github.com/google/go-attestation/attest FuzzParseEventLog \
-    parse_event_log_fuzzer
+    parse_event_log_fuzzer github.com/google/go-attestation*
 compile_go_fuzzer github.com/google/go-attestation/attest FuzzParseAKPublic12 \
-    parse_ak_public12_fuzzer
+    parse_ak_public12_fuzzer github.com/google/go-attestation*
 compile_go_fuzzer github.com/google/go-attestation/attest FuzzParseAKPublic20 \
-    parse_ak_public20_fuzzer
+    parse_ak_public20_fuzzer github.com/google/go-attestation*
 compile_go_fuzzer github.com/google/go-attestation/attest FuzzParseEKCertificate \
-    parse_ek_certificate_fuzzer
+    parse_ek_certificate_fuzzer github.com/google/go-attestation*
