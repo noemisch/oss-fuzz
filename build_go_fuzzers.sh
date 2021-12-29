@@ -28,5 +28,5 @@ done
 wait
 
 end_time=$(date +%s)
-elapsed=$(( end_time - start_time )); echo $elapsed
+elapsed=$(( end_time - start_time ))
 echo "Finished Building go fuzzers. Build took ${elapsed} seconds."

@@ -1,5 +1,6 @@
 #!/bin/bash -eu
 
+
 prepare_fuzzers() {
   echo "Prepare fuzzer environment..."
   fuzzer_number=$(find build -name "*fuzz*" -type f -executable | wc -l)
@@ -19,6 +20,8 @@ prepare_fuzzers() {
 }
 
 start_each_fuzzer() {
+  start_time=$(date +%s);
+
   fuzzer_path=$1
   fuzzer=${fuzzer_path#*/*/}
   fuzzer_dir=${fuzzer_path%/*}
@@ -26,15 +29,18 @@ start_each_fuzzer() {
   cd $fuzzer_dir
   echo "Start ${fuzzer_path}..."
   ./$fuzzer corpus -use_value_profile=1 &> fuzzer.log || true
-  echo "${fuzzer_path} CRASHED!"
+  end_time=$(date +%s)
+  elapsed=$(( end_time - start_time ))
+  echo "${fuzzer_path} CRASHED! Took ${elapsed} seconds."
+
 }
 
 start_fuzzers() {
   for fuzzer_path in $(find fuzztargets -name "*fuzz*" -type f -executable); do
     start_each_fuzzer $fuzzer_path &
   done
+  wait
 }
-wait
 
 prepare_fuzzers
 start_fuzzers
