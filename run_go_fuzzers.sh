@@ -40,6 +40,10 @@ start_each_fuzzer() {
     echo "${fuzzer_path}: Stopped after ${elapsed} seconds! PANIC found"
   elif grep -q "no interesting inputs were found" fuzzer.log; then
     echo "${fuzzer_path}: Stopped after ${elapsed} seconds! Please adjust instrumentation filer. No interesting inputs found."
+  elif grep -q "ALARM: working on the last Unit for" fuzzer.log; then
+    echo "${fuzzer_path}: Stopped after ${elapsed} seconds! TIMEOUT found"
+  elif grep -q "ERROR: libFuzzer: out-of-memory" fuzzer.log; then
+    echo "${fuzzer_path}: Stopped after ${elapsed} seconds! libfuzzer out-of-memory found"
   else
     echo "${fuzzer_path}: Stopped after ${elapsed} seconds! Something else found. Check ${fuzzer_dir}/fuzzer.log"
   fi
