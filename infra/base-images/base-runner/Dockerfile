@@ -79,7 +79,7 @@ ENV GOPATH /root/go
 
 # /root/.go/bin is for the standard Go binaries (i.e. go, gofmt, etc).
 # $GOPATH/bin is for the binaries from the dependencies installed via "go get".
-ENV PATH $PATH:/root/cifuzz-go/bin:$GOPATH/bin
+ENV PATH $PATH:/root/.go/bin:$GOPATH/bin
 
 # Set up Golang coverage modules.
 COPY gocoverage $GOPATH/gocoverage

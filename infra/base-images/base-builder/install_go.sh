@@ -23,7 +23,7 @@ rm -rf ./installer_linuxv
 
 git clone -b dev.libfuzzer.18 --single-branch https://github.com/CodeIntelligenceTesting/go.git /root/cifuzz-go
 cd /root/cifuzz-go/src
-PATH=$PATH:/root/.go/bin ./make.bash
+./make.bash
 
-go install github.com/CodeIntelligenceTesting/go114-fuzz-build@2693d0f11a288d5f0839b3105555757e6d8fdb3d
+go install github.com/CodeIntelligenceTesting/go114-fuzz-build@9926ed14738e95e0c33aacdc8effb16db6e725a1
 ln -s $GOPATH/bin/go114-fuzz-build $GOPATH/bin/go-fuzz
