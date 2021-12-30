@@ -21,14 +21,10 @@ ENV GOPATH /root/go
 
 # /root/.go/bin is for the standard Go binaries (i.e. go, gofmt, etc).
 # $GOPATH/bin is for the binaries from the dependencies installed via "go get".
-ENV PATH $PATH:/root/.go/bin:$GOPATH/bin
+ENV PATH $PATH:/root/cifuzz-go/bin:$GOPATH/bin
 ENV LIB_FUZZING_ENGINE -fsanitize=fuzzer
 
-ENV GOFUZZTAG 1d80aec48f8d240be71d617dc9b2ab11e1982f3a
-
 RUN install_go.sh
-
-ENV GOFUZZSRC /root/go/pkg/mod/github.com/\!code\!intelligence\!testing/go-fuzz\@v0.0.0-20211221112213-1d80aec48f8d
 
 # TODO(jonathanmetzman): Install this file using install_go.sh.
 COPY ossfuzz_coverage_runner.go $GOPATH

@@ -19,13 +19,11 @@ cd /tmp
 curl -O https://storage.googleapis.com/golang/getgo/installer_linux
 chmod +x ./installer_linux
 SHELL="bash" ./installer_linux
-rm -rf ./installer_linux
+rm -rf ./installer_linuxv
 
-echo 'Set "GOPATH=/root/go"'
-echo 'Set "PATH=$PATH:/root/.go/bin:$GOPATH/bin"'
+git clone -b dev.libfuzzer.18 --single-branch https://github.com/CodeIntelligenceTesting/go.git /root/cifuzz-go
+cd /root/cifuzz-go/src
+PATH=$PATH:/root/.go/bin ./make.bash
 
-#go get -u github.com/mdempsky/go114-fuzz-build
-#ln -s $GOPATH/bin/go114-fuzz-build $GOPATH/bin/go-fuzz
-go get -u github.com/CodeIntelligenceTesting/go-fuzz/go-fuzz-build@$GOFUZZTAG
-
-ln -s $GOPATH/bin/go-fuzz-build $GOPATH/bin/go-fuzz
+go install github.com/CodeIntelligenceTesting/go114-fuzz-build@2693d0f11a288d5f0839b3105555757e6d8fdb3d
+ln -s $GOPATH/bin/go114-fuzz-build $GOPATH/bin/go-fuzz

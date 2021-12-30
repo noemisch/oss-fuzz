@@ -63,12 +63,12 @@ else
   echo "Running go-fuzz $tags -func $function -o $fuzzer.a $path"
   if [[ $# -eq 4 || $# -eq 5 ]]; then
     if [[ $4 = "gofuzz" ]]; then
-      go-fuzz $tags -libfuzzer -func $function -o $fuzzer.a -go_fuzz_deps $GOFUZZSRC $path
+      go-fuzz $tags -func $function -o $fuzzer.a $path
     else
-      go-fuzz $tags -libfuzzer -include $include -func $function -o $fuzzer.a -go_fuzz_deps $GOFUZZSRC $path
+      go-fuzz $tags -include $include -func $function -o $fuzzer.a $path
     fi
   else
-    go-fuzz $tags -libfuzzer -func $function -o $fuzzer.a -go_fuzz_deps $GOFUZZSRC $path
+    go-fuzz $tags -func $function -o $fuzzer.a $path
   fi
   # Link Go code ($fuzzer.a) with fuzzing engine to produce fuzz target binary.
   $CXX $CXXFLAGS $LIB_FUZZING_ENGINE $fuzzer.a -o $OUT/$fuzzer

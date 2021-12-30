@@ -19,7 +19,7 @@
 # with fix of https://github.com/golang/go/issues/49961
 # ie https://go-review.googlesource.com/c/go/+/369098/
 (
-cd /root/.go
+cd /root/cifuzz-go
 git apply $SRC/372f9bd.diff || true
 )
 
