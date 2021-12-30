@@ -17,5 +17,5 @@
 
 
 # Same as usual except for added -tags fuzz.
-compile_go_fuzzer github.com/miekg/dns FuzzNewRR fuzz_newrr fuzz github.com/miekg/dns*
-compile_go_fuzzer github.com/miekg/dns Fuzz fuzz_msg_unpack fuzz github.com/miekg/dns*
+compile_go_fuzzer github.com/miekg/dns FuzzNewRR fuzz_newrr github.com/miekg/dns* fuzz
+compile_go_fuzzer github.com/miekg/dns Fuzz fuzz_msg_unpack github.com/miekg/dns* fuzz
