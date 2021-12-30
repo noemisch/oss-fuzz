@@ -56,5 +56,53 @@ start_all_fuzzers() {
   wait
 }
 
+trap printout SIGINT
+printout() {
+    echo ""
+    echo "exit"
+    exit
+}
+
+start_half_of_fuzzers_alternating() {
+  
+  #create two lists
+  fuzzer_path_list1=""
+  fuzzer_path_list2=""
+  counter=1
+  for fuzzer_path in $(find fuzztargets -name "*fuzz*" -type f -executable); do
+    if [ $((counter%2)) -eq 0 ]; then
+      fuzzer_path_list1="${fuzzer_path_list1} ${fuzzer_path} "
+    else
+      fuzzer_path_list2="${fuzzer_path_list2} ${fuzzer_path} "
+    fi
+    counter=$counter+1
+  done
+  
+  while :
+  do
+    for fuzzer_path in $fuzzer_path_list1; do
+      start_each_fuzzer $fuzzer_path &
+    done
+    sleep 3600
+    pkill -P $$ -9
+    wait   
+
+    #give some seconds to recover
+    sleep 5 
+    
+    for fuzzer_path in $fuzzer_path_list2; do
+      start_each_fuzzer $fuzzer_path &
+    done
+    sleep 3600
+    pkill -P $$ -9
+    wait
+
+    #give some seconds to recover
+    sleep 5 
+    
+  done
+}
+
 prepare_fuzzers
-start_all_fuzzers
+#start_all_fuzzers
+start_half_of_fuzzers_alternating
