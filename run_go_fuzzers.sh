@@ -80,26 +80,30 @@ start_half_of_fuzzers_alternating() {
   
   while :
   do
+    echo "Start fuzzing of first half: ${fuzzer_path_list1}"
     for fuzzer_path in $fuzzer_path_list1; do
       start_each_fuzzer $fuzzer_path &
     done
     sleep 3600
     pkill -P $$ -9
     wait   
-
-    #give some seconds to recover
+    echo "Finished fuzzing of first half"
+    #give some time to recover
     sleep 5 
     
+    echo "Lets switch! Start fuzzing of second half: ${fuzzer_path_list2}"
     for fuzzer_path in $fuzzer_path_list2; do
       start_each_fuzzer $fuzzer_path &
     done
     sleep 3600
     pkill -P $$ -9
     wait
+    echo "Finished fuzzing of second half"
 
-    #give some seconds to recover
+    #give some time to recover
     sleep 5 
     
+    echo"NEW ROUND started"
   done
 }
 
