@@ -28,14 +28,24 @@ start_each_fuzzer() {
   fuzzer_corpus_path=${fuzzer_dir}/corpus
   cd $fuzzer_dir
   echo "Start ${fuzzer_path}..."
-  ./$fuzzer corpus -use_value_profile=1 &> fuzzer.log || true
+  ./$fuzzer corpus -use_value_profile=1 &> all.log || true
   end_time=$(date +%s)
   elapsed=$(( end_time - start_time ))
-  echo "${fuzzer_path} CRASHED! Took ${elapsed} seconds."
+  
+  #clean log, only save last 200 lines
+  echo "$(tail -150 all.log)" > fuzzer.log
+  rm -f all.log
 
+  if grep -q "panic" fuzzer.log; then
+    echo "${fuzzer_path}: Stopped! PANIC found"
+  elif grep -q "no interesting inputs were found" fuzzer.log; then
+    echo "${fuzzer_path}: Stopped! Please adjust instrumentation filer. No interesting inputs found."
+  else
+    echo "${fuzzer_path}: Stopped! Something else found. Check ${fuzzer_dir}/fuzzer.log"
+  fi
 }
 
-start_fuzzers() {
+start_all_fuzzers() {
   for fuzzer_path in $(find fuzztargets -name "*fuzz*" -type f -executable); do
     start_each_fuzzer $fuzzer_path &
   done
@@ -43,4 +53,4 @@ start_fuzzers() {
 }
 
 prepare_fuzzers
-start_fuzzers
+start_all_fuzzers
