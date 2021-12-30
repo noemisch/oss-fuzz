@@ -37,11 +37,11 @@ start_each_fuzzer() {
   rm -f all.log
 
   if grep -q "panic" fuzzer.log; then
-    echo "${fuzzer_path}: Stopped! PANIC found"
+    echo "${fuzzer_path}: Stopped after elapsed seconds! PANIC found"
   elif grep -q "no interesting inputs were found" fuzzer.log; then
-    echo "${fuzzer_path}: Stopped! Please adjust instrumentation filer. No interesting inputs found."
+    echo "${fuzzer_path}: Stopped after elapsed seconds! Please adjust instrumentation filer. No interesting inputs found."
   else
-    echo "${fuzzer_path}: Stopped! Something else found. Check ${fuzzer_dir}/fuzzer.log"
+    echo "${fuzzer_path}: Stopped after elapsed seconds! Something else found. Check ${fuzzer_dir}/fuzzer.log"
   fi
 }
 
