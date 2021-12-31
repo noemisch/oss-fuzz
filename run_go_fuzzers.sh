@@ -103,7 +103,7 @@ start_half_of_fuzzers_alternating() {
     #give some time to recover
     sleep 5 
     
-    echo"NEW ROUND started"
+    echo "NEW ROUND started"
   done
 }
 
