@@ -28,13 +28,13 @@ start_each_fuzzer() {
   fuzzer_corpus_path=${fuzzer_dir}/corpus
   cd $fuzzer_dir
   echo "Start ${fuzzer_path}..."
-  ./$fuzzer corpus -use_value_profile=1 &> all.log || true
+  ./$fuzzer corpus -use_value_profile=1 &> full.log || true
   end_time=$(date +%s)
   elapsed=$(( end_time - start_time ))
   
-  #clean log, only save last 200 lines
-  echo "$(tail -150 all.log)" > fuzzer.log
-  rm -f all.log
+  #minimize log, only save last 200 lines
+  echo "$(tail -150 full.log)" > fuzzer.log
+  rm -f full.log
 
   if grep -q "panic" fuzzer.log; then
     echo "${fuzzer_path}: Stopped after ${elapsed} seconds! PANIC found"
@@ -56,11 +56,10 @@ start_all_fuzzers() {
   wait
 }
 
-trap printout SIGINT
-printout() {
-    echo ""
-    echo "exit"
-    exit
+clean_full_log_files() {
+  echo " ..."
+  echo "Clean: Delete all full.log files in fuzztargets"
+  find fuzztargets -name "full.log" -exec rm -rf {} \;
 }
 
 start_half_of_fuzzers_alternating() {
@@ -89,7 +88,8 @@ start_half_of_fuzzers_alternating() {
     wait   
     echo "Finished fuzzing of first half"
     #give some time to recover
-    sleep 5 
+    sleep 5
+    clean_full_log_files
     
     echo "Lets switch! Start fuzzing of second half: ${fuzzer_path_list2}"
     for fuzzer_path in $fuzzer_path_list2; do
@@ -102,11 +102,21 @@ start_half_of_fuzzers_alternating() {
 
     #give some time to recover
     sleep 5 
+    clean_full_log_files
     
     echo "NEW ROUND started"
   done
 }
 
+cleanup() {
+    clean_full_log_files
+    echo "exit"
+    exit
+}
+
 prepare_fuzzers
 #start_all_fuzzers
+trap cleanup SIGINT
 start_half_of_fuzzers_alternating
+
+
