@@ -73,6 +73,8 @@ start_fuzzers_in_list() {
     wait   
     #give some time to recover
     sleep 5
+    #for safety check and kill all fuzzer processes
+    pkill -f -9 "use_value_profile=1"
     clean_full_log_files
 }
 
