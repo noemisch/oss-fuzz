@@ -28,6 +28,7 @@ start_each_fuzzer() {
   fuzzer_dir=${fuzzer_path%/*}
   fuzzer_corpus_path=${fuzzer_dir}/corpus
   cd $fuzzer_dir
+  echo "start_each_fuzzer func"
   echo "Start ${fuzzer_path}..."
   ./$fuzzer corpus -use_value_profile=1 &> full.log || true
   end_time=$(date +%s)
@@ -48,7 +49,7 @@ start_each_fuzzer() {
   else
     echo "${fuzzer_path}: Stopped after ${elapsed} seconds! Something else found. Check ${fuzzer_dir}/fuzzer.log"
   fi
-  cd /home/azureuser/oss-fuzz
+  cd ../..
 }
 
 start_all_fuzzers() {
@@ -73,12 +74,14 @@ clean_tmp() {
 
 
 start_fuzzers_in_list() {
+    list=$1
     for fuzzer_path in $1; do
+      echo $fuzzer_path
       start_each_fuzzer $fuzzer_path &
     done
     sleep $FUZZER_RUNTIME
     pkill -P $$ -9
-    wait   
+    wait
     #give some time to recover
     sleep 5
     #for safety check and kill all fuzzer processes
@@ -106,11 +109,35 @@ start_half_of_fuzzers_alternating() {
   while :
   do
     echo "Start fuzzing of first half: ${fuzzer_path_list1}"
-    start_fuzzers_in_list $fuzzer_path_list1
+    for fuzzer_path in $fuzzer_path_list1; do
+      echo $fuzzer_path
+      start_each_fuzzer $fuzzer_path &
+    done
+    sleep $FUZZER_RUNTIME
+    pkill -P $$ -9
+    wait
+    #give some time to recover
+    sleep 5
+    #for safety check and kill all fuzzer processes
+    pkill -f -9 "use_value_profile=1"
+    clean_full_log_files
+    clean_tmp
     echo "Finished fuzzing of first half"
 
     echo "Start fuzzing of second half: ${fuzzer_path_list2}"
-    start_fuzzers_in_list $fuzzer_path_list2
+    for fuzzer_path in $fuzzer_path_list2; do
+      echo $fuzzer_path
+      start_each_fuzzer $fuzzer_path &
+    done
+    sleep $FUZZER_RUNTIME
+    pkill -P $$ -9
+    wait
+    #give some time to recover
+    sleep 5
+    #for safety check and kill all fuzzer processes
+    pkill -f -9 "use_value_profile=1"
+    clean_full_log_files
+    clean_tmp
     echo "Finished fuzzing of second half"
     
     echo "NEW ROUND started"
