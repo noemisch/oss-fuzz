@@ -48,6 +48,7 @@ start_each_fuzzer() {
   else
     echo "${fuzzer_path}: Stopped after ${elapsed} seconds! Something else found. Check ${fuzzer_dir}/fuzzer.log"
   fi
+  cd /home/azureuser/oss-fuzz
 }
 
 start_all_fuzzers() {
@@ -58,9 +59,16 @@ start_all_fuzzers() {
 }
 
 clean_full_log_files() {
-  echo " ..."
+  echo "..."
   echo "Clean: Delete all full.log files in fuzztargets"
   find fuzztargets -name "full.log" -exec rm -rf {} \;
+}
+
+clean_tmp() {
+  echo "Clean: Delete all files in /tmp folder"
+  cd /tmp
+  for i in * ; do rm -rf $i ; done
+  cd /home/azureuser/oss-fuzz
 }
 
 
@@ -76,6 +84,7 @@ start_fuzzers_in_list() {
     #for safety check and kill all fuzzer processes
     pkill -f -9 "use_value_profile=1"
     clean_full_log_files
+    clean_tmp
 }
 
 
@@ -110,6 +119,7 @@ start_half_of_fuzzers_alternating() {
 
 cleanup() {
     clean_full_log_files
+    clean_tmp
     echo "exit"
 
     exit
