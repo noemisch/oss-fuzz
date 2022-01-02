@@ -1,6 +1,6 @@
 #!/bin/bash -eu
 
-FUZZER_RUNTIME=10
+FUZZER_RUNTIME=3600
 
 prepare_fuzzers() {
   echo "Prepare fuzzer environment..."
