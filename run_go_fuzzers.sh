@@ -1,5 +1,6 @@
 #!/bin/bash -eu
 
+FUZZER_RUNTIME=3600
 
 prepare_fuzzers() {
   echo "Prepare fuzzer environment..."
@@ -62,6 +63,20 @@ clean_full_log_files() {
   find fuzztargets -name "full.log" -exec rm -rf {} \;
 }
 
+
+start_fuzzers_in_list() {
+    for fuzzer_path in $1; do
+      start_each_fuzzer $fuzzer_path &
+    done
+    sleep $FUZZER_RUNTIME
+    pkill -P $$ -9
+    wait   
+    #give some time to recover
+    sleep 5
+    clean_full_log_files
+}
+
+
 start_half_of_fuzzers_alternating() {
   
   #create two lists
@@ -76,33 +91,16 @@ start_half_of_fuzzers_alternating() {
     fi
     counter=$counter+1
   done
-  
+
   while :
   do
     echo "Start fuzzing of first half: ${fuzzer_path_list1}"
-    for fuzzer_path in $fuzzer_path_list1; do
-      start_each_fuzzer $fuzzer_path &
-    done
-    sleep 3600
-    pkill -P $$ -9
-    wait   
+    start_fuzzers_in_list $fuzzer_path_list1
     echo "Finished fuzzing of first half"
-    #give some time to recover
-    sleep 5
-    clean_full_log_files
-    
-    echo "Lets switch! Start fuzzing of second half: ${fuzzer_path_list2}"
-    for fuzzer_path in $fuzzer_path_list2; do
-      start_each_fuzzer $fuzzer_path &
-    done
-    sleep 3600
-    pkill -P $$ -9
-    wait
-    echo "Finished fuzzing of second half"
 
-    #give some time to recover
-    sleep 5 
-    clean_full_log_files
+    echo "Start fuzzing of second half: ${fuzzer_path_list2}"
+    start_fuzzers_in_list $fuzzer_path_list2
+    echo "Finished fuzzing of second half"
     
     echo "NEW ROUND started"
   done
@@ -111,6 +109,7 @@ start_half_of_fuzzers_alternating() {
 cleanup() {
     clean_full_log_files
     echo "exit"
+
     exit
 }
 
