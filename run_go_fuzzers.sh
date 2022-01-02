@@ -62,13 +62,13 @@ start_all_fuzzers() {
 clean_full_log_files() {
   echo "..."
   echo "Clean: Delete all full.log files in fuzztargets"
-  find fuzztargets -name "full.log" -exec rm -rf {} \;
+  find fuzztargets -name "full.log" -exec rm -rf {} \; 
 }
 
 clean_tmp() {
   echo "Clean: Delete all files in /tmp folder"
   cd /tmp
-  for i in * ; do rm -rf $i ; done
+  for i in * ; do rm -rf $i ; done || true
   cd /home/azureuser/oss-fuzz
 }
 
