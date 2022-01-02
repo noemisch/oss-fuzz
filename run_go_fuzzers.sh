@@ -1,6 +1,6 @@
 #!/bin/bash -eu
 
-FUZZER_RUNTIME=3600
+FUZZER_RUNTIME=10
 
 prepare_fuzzers() {
   echo "Prepare fuzzer environment..."
@@ -28,8 +28,8 @@ start_each_fuzzer() {
   fuzzer_dir=${fuzzer_path%/*}
   fuzzer_corpus_path=${fuzzer_dir}/corpus
   cd $fuzzer_dir
-  echo "start_each_fuzzer func"
-  echo "Start ${fuzzer_path}..."
+  #echo "start_each_fuzzer func"
+  echo "$(date): Start ${fuzzer_path}..."
   ./$fuzzer corpus -use_value_profile=1 &> full.log || true
   end_time=$(date +%s)
   elapsed=$(( end_time - start_time ))
@@ -39,17 +39,17 @@ start_each_fuzzer() {
   rm -f full.log
 
   if grep -q "panic" fuzzer.log; then
-    echo "${fuzzer_path}: Stopped after ${elapsed} seconds! PANIC found"
+    echo "${fuzzer_path}:$(date): Stopped after ${elapsed} seconds! PANIC found"
   elif grep -q "no interesting inputs were found" fuzzer.log; then
-    echo "${fuzzer_path}: Stopped after ${elapsed} seconds! Please adjust instrumentation filer. No interesting inputs found."
+    echo "${fuzzer_path}:$(date): Stopped after ${elapsed} seconds! Please adjust instrumentation filer. No interesting inputs found."
   elif grep -q "ALARM: working on the last Unit for" fuzzer.log; then
-    echo "${fuzzer_path}: Stopped after ${elapsed} seconds! TIMEOUT found"
+    echo "${fuzzer_path}:$(date): Stopped after ${elapsed} seconds! TIMEOUT found"
   elif grep -q "ERROR: libFuzzer: out-of-memory" fuzzer.log; then
-    echo "${fuzzer_path}: Stopped after ${elapsed} seconds! libfuzzer out-of-memory found"
+    echo "${fuzzer_path}:$(date): Stopped after ${elapsed} seconds! libfuzzer out-of-memory found"
   else
-    echo "${fuzzer_path}: Stopped after ${elapsed} seconds! Something else found. Check ${fuzzer_dir}/fuzzer.log"
+    echo "${fuzzer_path}:$(date): Stopped after ${elapsed} seconds! Something else found. Check ${fuzzer_dir}/fuzzer.log"
   fi
-  cd ../..
+  cd $OSSFUZZ_DIR
 }
 
 start_all_fuzzers() {
@@ -68,15 +68,16 @@ clean_full_log_files() {
 clean_tmp() {
   echo "Clean: Delete all files in /tmp folder"
   cd /tmp
-  for i in * ; do rm -rf $i ; done || true
-  cd /home/azureuser/oss-fuzz
+  for i in * ; do 
+    rm -rf $i || true
+  done
+  cd $OSSFUZZ_DIR
 }
 
 
 start_fuzzers_in_list() {
     list=$1
     for fuzzer_path in $1; do
-      echo $fuzzer_path
       start_each_fuzzer $fuzzer_path &
     done
     sleep $FUZZER_RUNTIME
@@ -108,9 +109,8 @@ start_half_of_fuzzers_alternating() {
 
   while :
   do
-    echo "Start fuzzing of first half: ${fuzzer_path_list1}"
+    echo "$(date): Start fuzzing of first half: ${fuzzer_path_list1}"
     for fuzzer_path in $fuzzer_path_list1; do
-      echo $fuzzer_path
       start_each_fuzzer $fuzzer_path &
     done
     sleep $FUZZER_RUNTIME
@@ -122,11 +122,10 @@ start_half_of_fuzzers_alternating() {
     pkill -f -9 "use_value_profile=1"
     clean_full_log_files
     clean_tmp
-    echo "Finished fuzzing of first half"
+    echo "$(date): Finished fuzzing of first half"
 
-    echo "Start fuzzing of second half: ${fuzzer_path_list2}"
+    echo "$(date): Start fuzzing of second half: ${fuzzer_path_list2}"
     for fuzzer_path in $fuzzer_path_list2; do
-      echo $fuzzer_path
       start_each_fuzzer $fuzzer_path &
     done
     sleep $FUZZER_RUNTIME
@@ -138,9 +137,9 @@ start_half_of_fuzzers_alternating() {
     pkill -f -9 "use_value_profile=1"
     clean_full_log_files
     clean_tmp
-    echo "Finished fuzzing of second half"
+    echo "$(date): Finished fuzzing of second half"
     
-    echo "NEW ROUND started"
+    echo "$(date): NEW ROUND started"
   done
 }
 
@@ -151,6 +150,8 @@ cleanup() {
 
     exit
 }
+
+OSSFUZZ_DIR=$(pwd)
 
 prepare_fuzzers
 #start_all_fuzzers
