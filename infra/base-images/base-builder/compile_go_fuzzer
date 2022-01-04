@@ -18,16 +18,16 @@
 path=$1
 function=$2
 fuzzer=$3
+tags="-tags gofuzz"
 if [[ $# -eq 4 ]]; then
   #external repositories can have gofuzz as 4th parameter
-  if [ $4 = "gofuzz" ]; then
-    tags="-tags $4"
-  else
+  if [[ $4 == *\* ]]; then
     include=$4
+  else
+    tags="-tags $4"
   fi
 fi
-tags="-tags gofuzz"
-if [[ $#  -eq 5 ]]; then
+if [[ $# -eq 5 ]]; then
   include=$4
   tags="-tags $5"
 fi
@@ -60,15 +60,12 @@ if [[ $SANITIZER = *coverage* ]]; then
   go test -run Test${function}Corpus -v $tags -coverpkg $fuzzed_repo/... -c -o $OUT/$fuzzer $path
 else
   # Compile and instrument all Go files relevant to this fuzz target.
-  echo "Running go-fuzz $tags -func $function -o $fuzzer.a $path"
-  if [[ $# -eq 4 || $# -eq 5 ]]; then
-    if [[ $4 = "gofuzz" ]]; then
-      go-fuzz $tags -func $function -o $fuzzer.a $path
-    else
-      go-fuzz $tags -include $include -func $function -o $fuzzer.a $path
-    fi
-  else
+  if [ -z ${include+x} ]; then
+    echo "Running go-fuzz $tags -func $function -o $fuzzer.a $path"
     go-fuzz $tags -func $function -o $fuzzer.a $path
+  else
+    echo "Running go-fuzz $tags -include $include -func $function -o $fuzzer.a $path"
+    go-fuzz $tags -include $include -func $function -o $fuzzer.a $path
   fi
   # Link Go code ($fuzzer.a) with fuzzing engine to produce fuzz target binary.
   $CXX $CXXFLAGS $LIB_FUZZING_ENGINE $fuzzer.a -o $OUT/$fuzzer
