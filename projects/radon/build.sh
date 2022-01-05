@@ -17,5 +17,5 @@
 
 
 cd ./src/fuzz/sqlparser
-go mod init github.com/radondb/radon/src/fuzz/sqlparser github.com/radondb/radon*
-compile_go_fuzzer . Fuzz fuzz
+go mod init github.com/radondb/radon/src/fuzz/sqlparser
+compile_go_fuzzer . Fuzz fuzz github.com/xelabs/go-mysqlstack/sqlparser*
