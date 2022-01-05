@@ -30,7 +30,7 @@ start_each_fuzzer() {
   cd $fuzzer_dir
   #echo "start_each_fuzzer func"
   echo "$(date): Start ${fuzzer_path}..."
-  ./$fuzzer corpus -use_value_profile=1 &> full.log || true
+  ./$fuzzer corpus -use_value_profile=1 -rss_limit_mb=4096 &> full.log || true
   end_time=$(date +%s)
   elapsed=$(( end_time - start_time ))
   
