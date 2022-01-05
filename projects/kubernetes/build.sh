@@ -46,4 +46,5 @@ compile_fuzzer "json" "FuzzStrictDecode"
 compile_fuzzer "json" "FuzzNonStrictDecode"
 
 # Build fuzzers from cncf-fuzzing:
-$SRC/cncf-fuzzing/projects/kubernetes/build.sh
+#$SRC/cncf-fuzzing/projects/kubernetes/build.sh
+$SRC/external_build.sh

@@ -24,4 +24,4 @@ RUN git clone --depth 1 https://github.com/kubernetes/kops
 RUN git clone --depth 1 https://github.com/cncf/cncf-fuzzing
 WORKDIR $SRC/
 
-COPY build.sh $SRC/
+COPY build.sh external_build.sh $SRC/
