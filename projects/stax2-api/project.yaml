@@ -3,6 +3,7 @@ language: jvm
 primary_contact: "none"
 auto_ccs:
   - "glendowne@code-intelligence.com"
+  - "wagner@code-intelligence.com"
   - "yakdan@code-intelligence.com"
 fuzzing_engines:
   - "libfuzzer"
