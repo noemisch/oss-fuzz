@@ -1,0 +1,13 @@
+homepage: "https://github.com/javaee/jsr311"
+language: jvm
+primary_contact: "none"
+auto_ccs:
+  - "glendowne@code-intelligence.com"
+  - "wagner@code-intelligence.com"
+  - "patrice.salathe@code-intelligence.com"
+  - "yakdan@code-intelligence.com"
+fuzzing_engines:
+  - "libfuzzer"
+sanitizers:
+  - "address"
+main_repo: "https://github.com/javaee/jsr311.git"
