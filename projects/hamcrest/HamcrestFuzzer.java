@@ -32,363 +32,264 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
 import java.util.HashMap;
 
-// This fuzzer reproduces the log4j RCE vulnerability CVE-2021-44228.
 public class HamcrestFuzzer {
 
-  HashMap<String,String> hashMap = new HashMap<String,String>();
-  HashMap<String,String> hashMap2 = new HashMap<String,String>();
-  
+  HashMap<String, String> hashMap = new HashMap<String, String>();
+  HashMap<String, String> hashMap2 = new HashMap<String, String>();
+
   public HamcrestFuzzer(FuzzedDataProvider data) {
   }
 
-  public void runTest(FuzzedDataProvider data) { 
-    
+  public void runTest(FuzzedDataProvider data) {
+
     hashMap.put(data.consumeString(10), data.consumeString(10));
     hashMap2.put(data.consumeString(10), data.consumeString(10));
 
     try {
       assertThat(data.consumeString(10), containsString(data.consumeString(10)));
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
-    try{
 
-      assertThat(data.consumeString(10), allOf(startsWith(data.consumeString(10)), containsString(data.consumeString(10))));
-    } catch (AssertionError e)
-    {
-      // documented ignore
-    }
     try {
+      assertThat(data.consumeString(10),allOf(startsWith(data.consumeString(10)), containsString(data.consumeString(10))));
+    } catch (AssertionError e) {
+      // documented ignore
+    }
 
+    try {
       assertThat(hashMap, is(hashMap2));
-    } catch (AssertionError e)
-    {
-      // documented ignore
-    }
-    try{
-
-      assertThat(hashMap2, is(aMapWithSize(2)));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
     try {
+      assertThat(hashMap2, is(aMapWithSize(2)));
+    } catch (AssertionError e) {
+      // documented ignore
+    }
 
+    try {
       assertThat(hashMap2, is(anEmptyMap()));
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-
+    try {
       assertThat(Arrays.asList(data.consumeString(10), data.consumeString(10)), hasSize(equalTo(2)));
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-
-      assertThat(new ArrayList<String>(){ {add(data.consumeString(10));add(data.consumeString(10));}}, is(empty()));
-    } catch (AssertionError e)
-    {
+    try {
+      assertThat(new ArrayList<String>() { { add(data.consumeString(10)); add(data.consumeString(10));}}, is(empty()));
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-
-      assertThat(new ArrayList<String>(){ {add(data.consumeString(10));add(data.consumeString(10));}}, is(emptyCollectionOf(String.class)));
-    } catch (AssertionError e)
-    {
+    try {
+      assertThat(new ArrayList<String>() {{ add(data.consumeString(10)); add(data.consumeString(10));}}, is(emptyCollectionOf(String.class)));
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-
-      assertThat(new ArrayList<String>(){ {add(data.consumeString(10));add(data.consumeString(10));}}, is(emptyIterable()));
-    } catch (AssertionError e)
-    {
+    try {
+      assertThat(new ArrayList<String>() {{add(data.consumeString(10));add(data.consumeString(10));}}, is(emptyIterable()));
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-
-      assertThat(new ArrayList<String>(){ {add(data.consumeString(10));add(data.consumeString(10));}}, is(emptyIterableOf(String.class)));
-    } catch (AssertionError e)
-    {
+    try {
+      assertThat(new ArrayList<String>() {{add(data.consumeString(10));add(data.consumeString(10));}}, is(emptyIterableOf(String.class)));
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-
-      assertThat(Arrays.asList(data.consumeString(10), data.consumeString(10)), contains(equalTo(data.consumeString(10)), equalTo(data.consumeString(10))));
-    } catch (AssertionError e)
-    {
+    try {
+      assertThat(Arrays.asList(data.consumeString(10), data.consumeString(10)),contains(equalTo(data.consumeString(10)), equalTo(data.consumeString(10))));
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-
-      assertThat(Arrays.asList(data.consumeString(10), data.consumeString(10)), containsInAnyOrder(Arrays.asList(equalTo(data.consumeString(10)), equalTo(data.consumeString(10)))));
-    
-    } catch (AssertionError e)
-    {
+    try {
+      assertThat(Arrays.asList(data.consumeString(10), data.consumeString(10)),containsInAnyOrder(Arrays.asList(equalTo(data.consumeString(10)), equalTo(data.consumeString(10)))));
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-
+    try {
       assertThat(hashMap, hasEntry(equalTo(data.consumeString(10)), equalTo(data.consumeString(10))));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-
+    try {
       assertThat(hashMap, hasKey(equalTo(data.consumeString(10))));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-      
+    try {
       assertThat(hashMap, hasValue(data.consumeString(10)));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-      
+    try {
       assertThat(data.consumeString(10), is(in(Arrays.asList(data.consumeString(10), data.consumeString(10)))));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-
-    try{
-      
+    try {
       assertThat(data.consumeString(10), isOneOf(data.consumeString(10), data.consumeString(10)));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-      
+    try {
       assertThat(data.consumeString(10), is(oneOf(data.consumeString(10), data.consumeString(10))));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-      
+    try {
       assertThat(data.consumeDouble(), is(closeTo(data.consumeDouble(), data.consumeDouble())));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-      
+    try {
       assertThat(data.consumeDouble(), is(notANumber()));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-      
+    try {
       assertThat(data.consumeInt(), comparesEqualTo(data.consumeInt()));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-      
+    try {
       assertThat(data.consumeInt(), greaterThan(data.consumeInt()));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-      
+    try {
       assertThat(data.consumeInt(), greaterThanOrEqualTo(data.consumeInt()));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-      
+    try {
       assertThat(data.consumeInt(), lessThan(data.consumeInt()));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-      
+    try {
       assertThat(data.consumeInt(), lessThanOrEqualTo(data.consumeInt()));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-      
+    try {
       assertThat(data.consumeString(10), equalToIgnoringCase(data.consumeString(10)));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-      
+    try {
       assertThat(data.consumeString(10), is(emptyString()));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-      
+    try {
       assertThat(data.consumeString(10), is(blankString()));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
-    try{
-      
+
+    try {
       assertThat(data.consumeInt(), lessThanOrEqualTo(data.consumeInt()));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
 
-    try{
-      
+    try {
       assertThat(data.consumeString(10), equalToIgnoringCase(data.consumeString(10)));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
-    try{
-      
+
+    try {
       assertThat(data.consumeString(10), is(emptyOrNullString()));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
-    try{
-      
+
+    try {
       assertThat(data.consumeString(10), is(blankOrNullString()));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
-    try{
-      
+
+    try {
       assertThat(data.consumeString(10), matchesPattern(data.consumeString(10)));
-
-    } catch (AssertionError | PatternSyntaxException e)
-    {
+    } catch (AssertionError | PatternSyntaxException e) {
       // documented ignore
     }
-    try{
-      
-      assertThat(data.consumeString(10), stringContainsInOrder(Arrays.asList(data.consumeString(10), data.consumeString(10))));
 
-    } catch (AssertionError e)
-    {
+    try {
+      assertThat(data.consumeString(10),stringContainsInOrder(Arrays.asList(data.consumeString(10), data.consumeString(10))));
+    } catch (AssertionError e) {
       // documented ignore
     }
-    try{
-      
+
+    try {
       assertThat(data.consumeString(10), hasLength(data.consumeInt()));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
-    try{
-      
+
+    try {
       assertThat(data.consumeBoolean(), hasToString(data.consumeString(10)));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
-    try{
-      
+
+    try {
       assertThat(Integer.class, typeCompatibleWith(Number.class));
-
-    } catch (AssertionError e)
-    {
+    } catch (AssertionError e) {
       // documented ignore
     }
-    try{
+
+    try {
       DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
       DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
       Document document = documentBuilder.newDocument();
 
-      // root element
       Element root = document.createElement(data.consumeString(10));
       document.appendChild(root);
 
-      // employee element
       Element employee = document.createElement(data.consumeString(10));
       root.appendChild(employee);
-      
-      assertThat(root, hasXPath(data.consumeString(10), equalTo(data.consumeString(10))));
 
-    } catch (AssertionError | DOMException | IllegalArgumentException | ParserConfigurationException e )
-    {
+      assertThat(root, hasXPath(data.consumeString(10), equalTo(data.consumeString(10))));
+    } catch (AssertionError | DOMException | IllegalArgumentException | ParserConfigurationException e) {
       // documented ignore
     }
-   
 
   }
 
-  
-  
   public static void fuzzerTestOneInput(FuzzedDataProvider data) {
     HamcrestFuzzer testClosure = new HamcrestFuzzer(data);
     testClosure.runTest(data);
   }
-
 
 }
