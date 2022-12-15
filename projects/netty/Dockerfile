@@ -36,6 +36,6 @@ WORKDIR ${SRC}
 #
 RUN git clone https://github.com/netty/netty.git
 
-ADD pom.xml build.sh ${SRC}/
+ADD pom.xml build.sh coverage.sh ${SRC}/
 ADD src/ ${SRC}/src/
 WORKDIR ${SRC}/netty
