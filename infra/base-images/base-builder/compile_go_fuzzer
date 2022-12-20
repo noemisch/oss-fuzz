@@ -28,6 +28,10 @@ fi
 cd $GOPATH/src/$path || true
 # in the case we are in the right directory, with go.mod but no go.sum
 go mod tidy || true
+go get -u github.com/CodeIntelligenceTesting/gofuzz/sanitizers@d707ca0ca2db3da909e91bab87ebd44d52b9b6a7
+if [ -f "vendor/modules.txt" ]; then
+  go mod vendor
+fi
 # project was downloaded with go get if go list fails
 go list $tags $path || { cd $GOPATH/pkg/mod/ && cd `echo $path | cut -d/ -f1-3 | awk '{print $1"@*"}'`; } || cd -
 # project does not have go.mod if go list fails again
@@ -59,9 +63,13 @@ if [[ $SANITIZER = *coverage* ]]; then
   fi
   go test -run Test${function}Corpus -v $tags -coverpkg $fuzzed_repo/...$pkgaddcov -c -o $OUT/$fuzzer $path
 else
+  gofuzz_tags=$tags
+  if [[ $tags = -tags* ]]; then gofuzz_tags="-$tags"; fi
+  echo "Running ci-gofuzz sanitize --$gofuzz_tags --verbose $path"
+  ci-gofuzz sanitize $gofuzz_tags --verbose $path
   # Compile and instrument all Go files relevant to this fuzz target.
   echo "Running go-fuzz $tags -func $function -o $fuzzer.a $path"
-  go-fuzz $tags -func $function -o $fuzzer.a $path
+  go-fuzz $tags -func $function -o $fuzzer.a -overlay overlay.json $path
 
   # Link Go code ($fuzzer.a) with fuzzing engine to produce fuzz target binary.
   $CXX $CXXFLAGS $LIB_FUZZING_ENGINE $fuzzer.a -o $OUT/$fuzzer

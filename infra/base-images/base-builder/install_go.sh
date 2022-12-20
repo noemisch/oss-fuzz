@@ -24,8 +24,23 @@ rm -rf ./installer_linux
 echo 'Set "GOPATH=/root/go"'
 echo 'Set "PATH=$PATH:/root/.go/bin:$GOPATH/bin"'
 
-go install github.com/mdempsky/go114-fuzz-build@latest
-ln -s $GOPATH/bin/go114-fuzz-build $GOPATH/bin/go-fuzz
+# We need to use an overlay file that contains file replacements for source files
+# that are instrumented with bug detection capabilities. There is a pull request
+# open in the original repository https://github.com/mdempsky/go114-fuzz-build.
+# We a fork temporarily until this PR is merged.
+cd /tmp
+git clone https://github.com/kyakdan/go114-fuzz-build
+cd go114-fuzz-build
+go build
+mkdir -p $GOPATH/bin
+mv go114-fuzz-build $GOPATH/bin/go-fuzz
+
+cd /tmp
+git clone https://github.com/CodeIntelligenceTesting/gofuzz
+cd gofuzz
+git checkout d707ca0ca2db3da909e91bab87ebd44d52b9b6a7
+make build
+mv build/bin/gofuzz_linux $GOPATH/bin/ci-gofuzz
 
 cd /tmp
 git clone https://github.com/AdamKorcz/go-118-fuzz-build
